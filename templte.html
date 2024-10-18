@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Tracker</title>
+</head>
+<body>
+    <h1>Student Performance Tracker</h1>
+    <nav>
+        <a href="{{ url_for('add_student') }}">Add Student</a>
+        <a href="{{ url_for('add_grades') }}">Add Grades</a>
+        <a href="{{ url_for('home') }}">Home</a>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    <label>Name:</label><input type="text" name="name" required>
+    <label>Roll Number:</label><input type="text" name="roll_number" required>
+    <input type="submit" value="Add Student">
+</form>
+{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    <label>Roll Number:</label><input type="text" name="roll_number" required>
+    <label>Subject:</label><input type="text" name="subject" required>
+    <label>Grade:</label><input type="number" name="grade" min="0" max="100" required>
+    <input type="submit" value="Add Grade">
+</form>
+{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<h2>Student Details</h2>
+<p>Name: {{ student.name }}</p>
+<p>Roll Number: {{ student.roll_number }}</p>
+<p>Grades: {{ student.grades }}</p>
+{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<h2>Average Grade</h2>
+<p>Average Grade: {{ average }}</p>
+{% endblock %}
+
+</body>
+</html>
